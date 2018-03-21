@@ -25,11 +25,6 @@ Github test line !!!
 */
 
 function drawInput(value) {
-
-        if($('#calc_input').html() !== $('#calc_exp').html()){
-                clearInput();
-        }
-
         var input = $('#calc_input').html();
         input = input + value.toString();
         $('#calc_input').html(input);
@@ -60,9 +55,12 @@ function clearResult() {
 }
 
 function clickController(buttonValue, state) {
-        if(state === "result"){
+        if (state === "result") {
                 clearExpression();
                 drawExpression($('#calc_input').html());
+        }
+        if (state === "new_input") {
+                clearInput();
         }
         if (Number.isInteger(parseInt(buttonValue)) || buttonValue.toString() === ".") {
                 drawInput(buttonValue);
@@ -73,6 +71,7 @@ function clickController(buttonValue, state) {
                 clearResult();
         } else if (buttonValue.toString() !== "=") {
                 drawExpression(buttonValue);
+                return "new_input";
         } else {
                 //Calculate and return result of expression
                 drawResult(eval($('#calc_exp').html()));
